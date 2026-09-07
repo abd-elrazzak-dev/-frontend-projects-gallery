@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get In Touch - Engineering Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-color: #0d1a15;
+            --card-bg: #13241d;
+            --input-bg: #1a2e25;
+            --primary-color: #d97026;
+            --text-main: #ffffff;
+            --text-muted: #8b9d96;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at top right, #183329 0%, transparent 40%);
+        }
+
+        .contact-card {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .header-text {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header-text h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .header-text h1 span {
+            color: var(--primary-color);
+        }
+
+        .header-text p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-wrapper {
+            background-color: var(--input-bg);
+            border-radius: 12px;
+            display: flex;
+            align-items: flex-start;
+            padding: 12px 15px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(217, 112, 38, 0.2);
+        }
+
+        .input-icon {
+            color: var(--text-muted);
+            margin-top: 32px;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .input-wrapper:not(.textarea-wrapper) .input-icon {
+            margin-top: 10px;
+        }
+
+        .input-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-content label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .input-content input, .input-content textarea {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            outline: none;
+            width: 100%;
+        }
+
+        .input-content input::placeholder, .input-content textarea::placeholder {
+            color: #4a5c55;
+        }
+
+        .input-content textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #e67e33, #c25c19);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(217, 112, 38, 0.4);
+        }
+
+        .submit-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-box h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .modal-box p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .modal-close-btn {
+            background: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 25px;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="contact-card">
+        <header class="header-text">
+            <h1>Get in <span>Touch</span></h1>
+            <p>We would love to hear from you...</p>
+        </header>
+
+        <form id="contactForm">
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-user input-icon"></i>
+                    <div class="input-content">
+                        <label>Your Name (Optional)</label>
+                        <input type="text" id="userName" placeholder="Enter your name">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-wrapper textarea-wrapper">
+                    <i class="fa-regular fa-comment-dots input-icon"></i>
+                    <div class="input-content">
+                        <label>Your Message</label>
+                        <textarea id="userMessage" placeholder="Write your message here..." required minlength="1"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span id="btnText">Send Message</span>
+                <i class="fa-regular fa-paper-plane" id="btnIcon"></i>
+            </button>
+        </form>
+    </main>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <i class="fa-regular fa-circle-check" style="font-size: 50px; color: var(--primary-color); margin-bottom: 15px;"></i>
+            <h2>Thank You!</h2>
+            <p id="modalText">We truly appreciate your message.</p>
+            <button class="modal-close-btn" id="closeModalBtn">Close</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD-LZITi7hjemvFsTv2KS3A4i_E1_qMdyk",
+            authDomain: "starname-5d5ff.firebaseapp.com",
+            projectId: "starname-5d5ff",
+            storageBucket: "starname-5d5ff.firebasestorage.app",
+            messagingSenderId: "732760000499",
+            appId: "1:732760000499:web:a0b6bd1ec15ad42cb07486",
+            measurementId: "G-JHCLJC8SG0"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const COLLECTION_NAME = "Engineering_Messages";
+
+        const ui = {
+            form: document.getElementById('contactForm'),
+            modal: document.getElementById('successModal'),
+            userName: document.getElementById('userName'),
+            userMessage: document.getElementById('userMessage'),
+            modalText: document.getElementById('modalText'),
+            submitBtn: document.getElementById('submitBtn'),
+            btnText: document.getElementById('btnText'),
+            btnIcon: document.getElementById('btnIcon'),
+            closeModalBtn: document.getElementById('closeModalBtn')
+        };
+
+        const toggleLoadingState = (isLoading) => {
+            ui.submitBtn.disabled = isLoading;
+            ui.btnText.textContent = isLoading ? "Sending..." : "Send Message";
+            ui.btnIcon.className = isLoading ? "fa-solid fa-spinner fa-spin" : "fa-regular fa-paper-plane";
+        };
+
+        const handleFormSubmit = async (e) => {
+            e.preventDefault();
+
+            const name = ui.userName.value.trim();
+            const message = ui.userMessage.value.trim();
+
+            if (!message) return ui.userMessage.focus();
+
+            toggleLoadingState(true);
+
+            try {
+                await addDoc(collection(db, COLLECTION_NAME), {
+                    name: name || "Anonymous",
+                    message,
+                    timestamp: serverTimestamp()
+                });
+
+                ui.modalText.innerHTML = name 
+                    ? `Thank you, <b>${name}</b>! <br>We truly appreciate your message.`
+                    : `Thank you! <br>We truly appreciate your message.`;
+
+                ui.modal.classList.add('active');
+                ui.form.reset();
+            } catch (error) {
+                console.error("Submission failed: ", error);
+                alert("Sorry, there was an error sending your message. Please try again later.");
+            } finally {
+                toggleLoadingState(false);
+            }
+        };
+
+        const closeModal = () => ui.modal.classList.remove('active');
+
+        ui.form.addEventListener('submit', handleFormSubmit);
+        ui.closeModalBtn.addEventListener('click', closeModal);
+        ui.modal.addEventListener('click', (e) => {
+            if (e.target === ui.modal) closeModal();
+        });
+    </script>
+</body>
+</html>
+
+

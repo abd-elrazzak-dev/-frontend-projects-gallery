@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Back - Engineering Journey</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background-color: #13241d; 
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-box h2 {
+            color: #d97026;
+            margin-top: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .modal-box p {
+            color: #8b9d96;
+            font-size: 14px;
+            line-height: 1.5;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .modal-close-btn {
+            background: transparent;
+            border: 1px solid #d97026;
+            color: #d97026;
+            padding: 8px 25px;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .modal-close-btn:hover {
+            background: #d97026;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="login-card">
+        <header class="header-text">
+            <h1>Welcome <span>Back</span></h1>
+            <p>Sign in to continue</p>
+        </header>
+
+        <form id="loginForm" action="#" method="POST">
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <i class="fa-regular fa-envelope input-icon"></i>
+                    <div class="input-content">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <div class="input-content">
+                        <label>Password</label>
+                        <input type="password" placeholder="Enter your password" id="password" required>
+                    </div>
+                    <button type="button" class="eye-btn" id="togglePasswordBtn">
+                        <i class="fa-regular fa-eye-slash" id="eye-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <a href="#" class="forgot-pass">Forgot Password?</a>
+
+            <button type="submit" class="sign-in-btn" id="signInBtn">
+                <span id="btnText">Sign In</span>
+                <i class="fa-solid fa-arrow-right" id="btnIcon"></i>
+            </button>
+        </form>
+
+        <div class="divider">
+            <span>or continue with</span>
+        </div>
+
+        <div class="social-logins">
+            <a href="#" class="social-btn google"><i class="fa-brands fa-google"></i></a>
+            <a href="#" class="social-btn github"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="social-btn linkedin"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+
+        <p class="signup-text">
+            Don't have an account? <a href="#">Sign Up</a>
+        </p>
+    </main>
+
+    <div class="modal-overlay" id="welcomeModal">
+        <div class="modal-box">
+            <i class="fa-regular fa-circle-check" style="font-size: 50px; color: #d97026; margin-bottom: 15px;"></i>
+            <h2>Welcome!</h2>
+            <p id="modalText">This interface is a personal front-end project designed to highlight my coding and UI design skills. Thanks for stopping by and engaging with what I've built!</p>
+            <button class="modal-close-btn" id="closeModalBtn">Close</button>
+        </div>
+    </div>
+   
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const welcomeModal = document.getElementById('welcomeModal');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const signInBtn = document.getElementById('signInBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eye-icon');
+
+            const togglePasswordVisibility = () => {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                eyeIcon.classList.replace(
+                    isPassword ? 'fa-eye-slash' : 'fa-eye', 
+                    isPassword ? 'fa-eye' : 'fa-eye-slash'
+                );
+            };
+
+            const handleLoginSubmit = async (e) => {
+                e.preventDefault();
+                
+                signInBtn.disabled = true;
+                btnText.textContent = "Signing in...";
+                btnIcon.className = "fa-solid fa-spinner fa-spin";
+                
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                welcomeModal.classList.add('active');
+                
+                signInBtn.disabled = false;
+                btnText.textContent = "Sign In";
+                btnIcon.className = "fa-solid fa-arrow-right";
+            };
+
+            const closeModal = () => {
+                welcomeModal.classList.remove('active');
+                loginForm.reset();
+            };
+
+            togglePasswordBtn.addEventListener('click', togglePasswordVisibility);
+            loginForm.addEventListener('submit', handleLoginSubmit);
+            closeModalBtn.addEventListener('click', closeModal);
+            welcomeModal.addEventListener('click', (e) => {
+                if (e.target === welcomeModal) closeModal();
+            });
+        });
+    </script>
+</body>
+</html>
+
+
