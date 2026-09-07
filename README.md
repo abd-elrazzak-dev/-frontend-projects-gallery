@@ -1,2 +1,2 @@
-# -frontend-projects-gallery
+# frontend-projects-gallery
 Frontend Design Showcase
