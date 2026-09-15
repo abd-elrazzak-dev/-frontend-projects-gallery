@@ -1,2 +1,2 @@
-# frontend-projects-gallery
+# Front-End-Projects-Gallery
 
