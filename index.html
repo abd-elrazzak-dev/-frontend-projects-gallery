@@ -3,112 +3,334 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Abderrazzak.dev - Profile</title>
-  
+  <title>Abderrazzak.dev — Profile</title>
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
 
   <style>
+    /* ============================================================
+       1. Design tokens
+       ============================================================ */
     :root {
+      --accent: #d9651b;
+      --accent-hover: #c25816;
+
       --card-bg: rgba(29, 37, 33, 0.28);
       --card-border: rgba(211, 110, 29, 0.2);
+      --card-radius: 2.5rem;
+
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-bg-hover: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --glass-border-hover: rgba(217, 101, 27, 0.4);
+
       --text-main: #e8f0ea;
+      --text-soft: rgba(255, 255, 255, 0.8);
+      --text-muted: rgba(209, 250, 229, 0.7);
+
+      --shadow-panel: 0 30px 60px rgba(0, 0, 0, 0.6);
+      --shadow-accent: 0 8px 24px -6px rgba(217, 101, 27, 0.7);
+      --shadow-accent-hover: 0 12px 28px -6px rgba(217, 101, 27, 0.9);
+
+      --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ============================================================
+       2. Base
+       ============================================================ */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
     }
 
     body {
       position: relative;
-      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      background-image: url('00.jpg');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: var(--text-main);
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 1.25rem;
       overflow: hidden;
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      background-image: url('00.jpg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
     }
 
+    /* Dark overlay above the background photo */
     body::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(5, 13, 9, 0.8), rgba(10, 26, 18, 0.95));
       z-index: 1;
+      background: linear-gradient(to bottom, rgba(5, 13, 9, 0.8), rgba(10, 26, 18, 0.95));
     }
 
-    .glass-panel {
-      width: 90%;
-      max-width: 420px;
-      padding: 40px 30px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
-      z-index: 2;
+    a {
+      text-decoration: none;
+      color: inherit;
     }
 
-    .glass-placeholder {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.02);
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    img {
+      display: block;
+      max-width: 100%;
     }
 
-    .glass-placeholder:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border-color: rgba(217, 101, 27, 0.4);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .avatar-container {
-      background: linear-gradient(135deg, #d9651b 0%, rgba(10, 30, 20, 0.8) 100%);
-      padding: 4px;
-      box-shadow: 0 10px 40px rgba(217, 101, 27, 0.3);
-    }
-
+    /* ============================================================
+       3. Decorative background shape
+       ============================================================ */
     .bg-wave-line {
       position: absolute;
       top: 20%;
       left: -10%;
+      z-index: 0;
       width: 120%;
       height: 60%;
       background: linear-gradient(to right, transparent, rgba(217, 101, 27, 0.06), transparent);
       transform: rotate(-15deg);
       filter: blur(40px);
       pointer-events: none;
-      z-index: 0;
     }
 
+    /* ============================================================
+       4. Glass panel
+       ============================================================ */
+    .glass-panel {
+      height: 83vh;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 400px;
+      padding: 3.5rem 1.75rem 2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-panel);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* ============================================================
+       5. Avatar
+       ============================================================ */
+    .avatar-container {
+      position: absolute;
+      top: -3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 112px;
+      height: 112px;
+      padding: 4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent) 0%, rgba(10, 30, 20, 0.8) 100%);
+      box-shadow: 0 10px 40px rgba(217, 101, 27, 0.3);
+    }
+
+    .avatar-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 50%;
+      background: #000;
+    }
+
+    .avatar-fallback {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: linear-gradient(to top right, #064e3b, #047857);
+    }
+
+    .avatar-inner img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ============================================================
+       6. Header
+       ============================================================ */
+    .profile-header {
+      width: 100%;
+      margin: 1rem 0 0.5rem;
+      text-align: center;
+    }
+
+    .profile-name {
+      margin: 0 0 0.5rem;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+    }
+
+    .profile-bio {
+      margin: 0;
+      padding: 0 1rem;
+      font-size: 12px;
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+
+    /* ============================================================
+       7. Project links
+       ============================================================ */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    .links-grid:last-of-type {
+      margin-bottom: 2rem;
+    }
+
+    .glass-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.625rem;
+      height: 72px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 1.25rem;
+      box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.4s var(--ease-soft);
+    }
+
+    .glass-placeholder:hover {
+      background: var(--glass-bg-hover);
+      border-color: var(--glass-border-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-placeholder i {
+      font-size: 22px;
+      color: rgba(217, 101, 27, 0.9);
+    }
+
+    .glass-placeholder span {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.025em;
+      color: var(--text-soft);
+    }
+
+    /* ============================================================
+       8. Contact button
+       ============================================================ */
+    .btn-contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 18px 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+      border-radius: 9999px;
+      box-shadow: var(--shadow-accent);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
+    }
+
+    .btn-contact i {
+      font-size: 24px;
+    }
+
+    .btn-contact:hover {
+      background: var(--accent-hover);
+      box-shadow: var(--shadow-accent-hover);
+    }
+
+    .btn-contact:active {
+      transform: scale(0.97);
+    }
+
+    /* ============================================================
+       9. Focus states (accessibility)
+       ============================================================ */
+    .glass-placeholder:focus-visible,
+    .btn-contact:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    /* ============================================================
+       10. Animations
+       ============================================================ */
     @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(40px); }
-      100% { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.6); }
-      70% { transform: scale(1.05); }
-      100% { opacity: 1; transform: scale(1); }
+      0% {
+        opacity: 0;
+        transform: scale(0.6);
+      }
+      70% {
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .animate-fade-in-up,
+    .animate-pop-in {
+      opacity: 0;
+      animation-duration: 0.8s;
+      animation-timing-function: var(--ease-soft);
+      animation-fill-mode: forwards;
     }
 
     .animate-fade-in-up {
-      opacity: 0;
-      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-name: fadeInUp;
     }
 
     .animate-pop-in {
-      opacity: 0;
-      animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-name: popIn;
     }
 
     .delay-100 { animation-delay: 100ms; }
@@ -116,61 +338,85 @@
     .delay-300 { animation-delay: 300ms; }
     .delay-400 { animation-delay: 400ms; }
     .delay-500 { animation-delay: 500ms; }
+
+    /* ============================================================
+       11. Responsive & motion preferences
+       ============================================================ */
+    @media (min-width: 640px) {
+      body {
+        padding: 2rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      .animate-fade-in-up,
+      .animate-pop-in {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
-<body class="relative flex min-h-screen w-full items-center justify-center overflow-hidden p-5 text-white antialiased sm:p-8">
-  
-  <div class="bg-wave-line"></div>
 
-  <main class="glass-panel animate-fade-in-up relative z-10 flex w-full max-w-[400px] flex-col items-center rounded-[2.5rem] p-7 pb-8 pt-14">
-    
-    <div class="avatar-container animate-pop-in delay-200 absolute -top-14 flex h-[112px] w-[112px] items-center justify-center rounded-full">
-      <div class="relative h-full w-full overflow-hidden rounded-full bg-black">
-        <div class="absolute inset-0 z-0 bg-gradient-to-tr from-emerald-900 to-emerald-700"></div>
-        <img src="00.jpg" alt="Profile" class="relative z-10 h-full w-full object-cover">
+<body>
+  <div class="bg-wave-line" aria-hidden="true"></div>
+
+  <main class="glass-panel animate-fade-in-up">
+    <!-- Avatar -->
+    <div class="avatar-container animate-pop-in delay-200">
+      <div class="avatar-inner">
+        <div class="avatar-fallback" aria-hidden="true"></div>
+        <img src="00.jpg" alt="Abderrazzak profile picture">
       </div>
     </div>
 
-    <header class="animate-fade-in-up delay-300 mb-8 mt-4 w-full text-center">
-      <h1 class="mb-2 text-[26px] font-bold tracking-tight text-white drop-shadow-lg">Abderrazzak.dev</h1>
-      <p class="px-4 text-[14px] font-medium leading-snug text-emerald-100/70">
-        Dedicated Front-End Developer building dynamic, highly responsive digital interfaces with a focus on clean code and modern UI aesthetics <br>
-A showcase of some personal front-end projects I've been experimenting with 👇
+    <!-- Header -->
+    <header class="profile-header animate-fade-in-up delay-300">
+      <h1 class="profile-name">Abderrazzak.dev</h1>
+      <p class="profile-bio">
+        Dedicated Front-End Developer building dynamic, highly responsive digital interfaces
+        with a focus on clean code and modern UI aesthetics.<br>
+        A showcase of some personal front-end projects I've been experimenting with 👇
       </p>
     </header>
 
-    <section class="animate-fade-in-up delay-400 mb-4 grid w-full grid-cols-2 gap-4">
-      <a href="Sign_In/signin.html" class="glass-placeholder flex h-[72px] items-center justify-center gap-2.5 rounded-[1.25rem]">
-        <i class="ph ph-sign-in text-[22px] text-[#d9651b]/90"></i>
-        <span class="text-[15px] font-semibold tracking-wide text-white/80">LoginPage</span>
+    <!-- Project links -->
+    <section class="links-grid animate-fade-in-up delay-400">
+      <a href="Sign_In/signin.html" class="glass-placeholder">
+        <i class="ph ph-sign-in" aria-hidden="true"></i>
+        <span>LoginPage</span>
       </a>
 
-      <a href="Written_In_The_Stars/star.html" class="glass-placeholder flex h-[72px] items-center justify-center gap-2.5 rounded-[1.25rem]">
-        <i class="ph ph-sparkle text-[22px] text-[#d9651b]/90"></i>
-        <span class="text-[15px] font-semibold tracking-wide text-white/80">InTheStars</span>
+      <a href="Written_In_The_Stars/star.html" class="glass-placeholder">
+        <i class="ph ph-sparkle" aria-hidden="true"></i>
+        <span>InTheStars</span>
       </a>
     </section>
 
-    <section class="animate-fade-in-up delay-500 mb-8 grid w-full grid-cols-2 gap-4">
-      <a href="Samsung_Store/store.html" class="glass-placeholder flex h-[72px] items-center justify-center gap-2.5 rounded-[1rem]">
-        <i class="ph ph-storefront text-[22px] text-[#d9651b]/90"></i>
-        <span class="text-[15px] font-semibold tracking-wide text-white/80">SamsungStore</span>
+    <section class="links-grid animate-fade-in-up delay-500">
+      <a href="Samsung_Store/store.html" class="glass-placeholder">
+        <i class="ph ph-storefront" aria-hidden="true"></i>
+        <span>SamsungStore</span>
       </a>
-      
-      <a href="#" class="glass-placeholder flex h-[72px] items-center justify-center gap-2.5 rounded-[1.25rem]">
-        <i class="ph ph-hourglass-medium text-[22px] text-[#d9651b]/90"></i>
-        <span class="text-[15px] font-semibold tracking-wide text-white/80">Incoming...</span>
+
+      <a href="#" class="glass-placeholder">
+        <i class="ph ph-hourglass-medium" aria-hidden="true"></i>
+        <span>Incoming...</span>
       </a>
     </section>
 
-    <a href="Contact_Me/contact.html" class="animate-fade-in-up delay-500 flex w-full items-center justify-center gap-2 rounded-full bg-[#d9651b] py-[18px] text-[16px] font-bold text-white shadow-[0_8px_24px_-6px_rgba(217,101,27,0.7)] transition-all duration-300 hover:bg-[#c25816] hover:shadow-[0_12px_28px_-6px_rgba(217,101,27,0.9)] active:scale-[0.97]">
-      <i class="ph-fill ph-paper-plane-tilt text-[24px]"></i>
+    <!-- Contact -->
+    <a href="Contact_Me/contact.html" class="btn-contact animate-fade-in-up delay-500">
+      <i class="ph-fill ph-paper-plane-tilt" aria-hidden="true"></i>
       Contact me
     </a>
-    
   </main>
-
 </body>
 </html>
-
-
