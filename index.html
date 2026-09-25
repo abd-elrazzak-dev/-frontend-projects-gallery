@@ -1,422 +1,528 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Abderrazzak.dev — Profile</title>
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Card Component</title>
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        /* إعدادات عامة وتنسيقات الخطوط والألوان الداكنة للزجاج */
+        :root {
+            --primary-text: #ffffff;
+            --secondary-text: #9ca3af;
+            --bg-color: #0b132b;
+            --card-bg: rgba(14, 46, 111, 0);
+            --btn-bg: #3284c7;
+            --btn-text: #cedcfd;
+            --divider-color: rgba(255, 255, 255, 0.15);
+            --secondary-bg-color: rgba(255, 255, 255, 0.2);
+        }
 
-  <style>
-    /* ============================================================
-       1. Design tokens
-       ============================================================ */
-    :root {
-      --accent: #d9651b;
-      --accent-hover: #c25816;
+          
+         body::-webkit-scrollbar { 
+            display: none;
+         }
 
-      --card-bg: rgba(29, 37, 33, 0.28);
-      --card-border: rgba(211, 110, 29, 0.2);
-      --card-radius: 2.5rem;
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            background-image: url('back.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-attachment: fixed;
+        }
 
-      --glass-bg: rgba(255, 255, 255, 0.05);
-      --glass-bg-hover: rgba(255, 255, 255, 0.1);
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-border-hover: rgba(217, 101, 27, 0.4);
+        /* تصميم البطاقة الأساسية مع تأثير Glassmorphism */
+        .profile-card {
+            width: 100%;
+            max-width: 900px;
+            height: auto;
+            max-height: max-content;
+            border-radius: 28px;
+            background: var(--card-bg);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            position: relative;
+            
+    transform-origin: center center;
+    animation: expandCard 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            
+        }      
 
-      --text-main: #e8f0ea;
-      --text-soft: rgba(255, 255, 255, 0.8);
-      --text-muted: rgba(209, 250, 229, 0.7);
+        /* قسم صورة الغلاف مع التلاشي والتداخل السلس */
+        .cover-section {
+            height: 100px;
+            position: relative;
+            opacity: 0;
+    animation: fadeInContent 0.5s ease-out 1.1s forwards;
+            background-size: cover;
+            background-position: center;
 
-      --shadow-panel: 0 30px 60px rgba(0, 0, 0, 0.6);
-      --shadow-accent: 0 8px 24px -6px rgba(217, 101, 27, 0.7);
-      --shadow-accent-hover: 0 12px 28px -6px rgba(217, 101, 27, 0.9);
+            
+        }
 
-      --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
-    }
 
-    /* ============================================================
-       2. Base
-       ============================================================ */
-    *,
-    *::before,
-    *::after {
-      box-sizing: border-box;
-    }
+                .test {
+            height: 30px;
+            position: relative;
+            
+            background-size: cover;
+            background-position: center;
 
-    html,
-    body {
-      min-height: 100%;
-    }
+            
+        }
 
-    body {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 1.25rem;
-      overflow: hidden;
-      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
-      background-image: url('00.jpg');
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-    }
 
-    /* Dark overlay above the background photo */
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(to bottom, rgba(5, 13, 9, 0.8), rgba(10, 26, 18, 0.95));
-    }
+        .tools-section {
+            position: absolute;
+            transform: translateX(230%);
+            justify-content: space-around;
+            width: 20%;
+            background-color: var(--secondary-bg-color);
+            border: 1px solid var(--secondary-text);
+            border-radius: 50px;
+            padding: 0 28px;
+            margin-top: 10px;
+            z-index: 6;
+        }
+      
 
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
 
-    img {
-      display: block;
-      max-width: 100%;
-    }
+        .icons {
+            color: var(--btn-text);
+            font-size: 20px;
+            margin: 5px;
+        }
 
-    /* ============================================================
-       3. Decorative background shape
-       ============================================================ */
-    .bg-wave-line {
-      position: absolute;
-      top: 20%;
-      left: -10%;
-      z-index: 0;
-      width: 120%;
-      height: 60%;
-      background: linear-gradient(to right, transparent, rgba(217, 101, 27, 0.06), transparent);
-      transform: rotate(-15deg);
-      filter: blur(40px);
-      pointer-events: none;
-    }
 
-    /* ============================================================
-       4. Glass panel
-       ============================================================ */
-    .glass-panel {
-      height: 83vh;
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 400px;
-      padding: 3.5rem 1.75rem 2rem;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: var(--card-radius);
-      box-shadow: var(--shadow-panel);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-    }
 
-    /* ============================================================
-       5. Avatar
-       ============================================================ */
-    .avatar-container {
-      position: absolute;
-      top: -3.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 112px;
-      height: 112px;
-      padding: 4px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent) 0%, rgba(10, 30, 20, 0.8) 100%);
-      box-shadow: 0 10px 40px rgba(217, 101, 27, 0.3);
-    }
 
-    .avatar-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      border-radius: 50%;
-      background: #000;
-    }
+        /* طبقة تدرج لوني مكملة لدمج خلفية الكارت مع صورة الغلاف */
+        .cover-section::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            
+            pointer-events: none;
+        }
 
-    .avatar-fallback {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background: linear-gradient(to top right, #064e3b, #047857);
-    }
+        /* زر الإشارة المرجعية (Bookmark) */
+        .bookmark-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
 
-    .avatar-inner img {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+        .bookmark-btn svg {
+            stroke: #ffffff;
+        }
 
-    /* ============================================================
-       6. Header
-       ============================================================ */
-    .profile-header {
-      width: 100%;
-      margin: 1rem 0 0.5rem;
-      text-align: center;
-    }
+        .bookmark-btn:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            transform: scale(1.05);
+        }
 
-    .profile-name {
-      margin: 0 0 0.5rem;
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #fff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
-    }
+        /* محتوى البطاقة السفلي */
+        .card-content {
+            padding: 0px 30px 30px 30px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+    animation: fadeInContent 0.5s ease-out 1.1s forwards;
+        }
 
-    .profile-bio {
-      margin: 0;
-      padding: 0 1rem;
-      font-size: 12px;
-      font-weight: 500;
-      line-height: 1.45;
-      color: var(--text-muted);
-    }
+        /* الصورة الشخصية (Avatar) */
+        .avatar-container {
+            margin-top: -75px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .avatar-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.25);
+            object-fit: cover;
+            background-color: #1e293b;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
 
-    /* ============================================================
-       7. Project links
-       ============================================================ */
-    .links-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem;
-      width: 100%;
-      margin-bottom: 1rem;
-    }
+        /* قسم المعلومات الأساسية */
+        .profile-info {
+            margin-bottom: 24px;
+        }
 
-    .links-grid:last-of-type {
-      margin-bottom: 2rem;
-    }
+        .profile-name {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary-text);
+            margin: 0 0 6px 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
 
-    .glass-placeholder {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.625rem;
-      height: 72px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 1.25rem;
-      box-shadow: inset 0 2px 10px rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      transition: all 0.4s var(--ease-soft);
-    }
+        .profile-subtitle {
+            font-size: 16px;
+            color: var(--secondary-text);
+            margin: 0 0 12px 0;
+        }
 
-    .glass-placeholder:hover {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-hover);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
+        /* صف التفاصيل والأدوات */
+        .details-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
 
-    .glass-placeholder i {
-      font-size: 22px;
-      color: rgba(217, 101, 27, 0.9);
-    }
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            color: var(--secondary-text);
+            font-size: 14px;
+            font-weight: 500;
+        }
 
-    .glass-placeholder span {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.025em;
-      color: var(--text-soft);
-    }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-    /* ============================================================
-       8. Contact button
-       ============================================================ */
-    .btn-contact {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      width: 100%;
-      padding: 18px 0;
-      font-size: 16px;
-      font-weight: 700;
-      color: #fff;
-      background: var(--accent);
-      border-radius: 9999px;
-      box-shadow: var(--shadow-accent);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.15s ease;
-    }
+        .meta-item svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
 
-    .btn-contact i {
-      font-size: 24px;
-    }
+        .tools-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--primary-text);
+            font-size: 15px;
+        }
 
-    .btn-contact:hover {
-      background: var(--accent-hover);
-      box-shadow: var(--shadow-accent-hover);
-    }
+        .tool-icon {
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            object-fit: contain;
+        }
 
-    .btn-contact:active {
-      transform: scale(0.97);
-    }
+        /* صف الإحصائيات والزر */
+        .stats-action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 30px;
+            padding-top: 24px;
+            border-top: 1px solid var(--divider-color);
+        }
 
-    /* ============================================================
-       9. Focus states (accessibility)
-       ============================================================ */
-    .glass-placeholder:focus-visible,
-    .btn-contact:focus-visible {
-      outline: 2px solid var(--accent);
-      outline-offset: 3px;
-    }
+        .stats-container {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
 
-    /* ============================================================
-       10. Animations
-       ============================================================ */
-    @keyframes fadeInUp {
-      from {
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--primary-text);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-value svg {
+            width: 16px;
+            height: 16px;
+            fill: var(--primary-text);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--secondary-text);
+        }
+
+        .divider {
+            width: 1px;
+            height: 30px;
+            background-color: var(--divider-color);
+        }
+
+        /* زر التواصل */
+        .contact-btn {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
+        }
+
+
+
+        .glass-placeholder {
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
+            border: 1px solid var(--btn-text);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(7, 7, 7, 0.58);
+            text-decoration: none;
+        }
+
+
+
+        .button{
+            margin: 70px 30px 50px 30px;
+            width: 80%;
+            display: flex;
+            justify-content: space-around;
+            align-items: start;
+        }
+
+        .contact-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+
+
+
+
+/* 1. حركة توسع البطاقة من خط في المنتصف */
+@keyframes expandCard {
+    0% {
         opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
+        transform: scale(0, 0.005); /* خط رفيع معدوم في منتصف الشاشة */
+    }
+    35% {
+        opacity: 1;
+        transform: scale(1, 0.005); /* يمتد الخط أفقياً تماماً */
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1, 1); /* ينفتح للأعلى وللأسفل ليكتمل الكارت */
+    }
+}
+
+/* 2. حركة ظهور المحتوى الداخلي */
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
         opacity: 1;
         transform: translateY(0);
-      }
     }
+}
 
-    @keyframes popIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.6);
-      }
-      70% {
-        transform: scale(1.05);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
 
-    .animate-fade-in-up,
-    .animate-pop-in {
-      opacity: 0;
-      animation-duration: 0.8s;
-      animation-timing-function: var(--ease-soft);
-      animation-fill-mode: forwards;
-    }
 
-    .animate-fade-in-up {
-      animation-name: fadeInUp;
-    }
 
-    .animate-pop-in {
-      animation-name: popIn;
-    }
 
-    .delay-100 { animation-delay: 100ms; }
-    .delay-200 { animation-delay: 200ms; }
-    .delay-300 { animation-delay: 300ms; }
-    .delay-400 { animation-delay: 400ms; }
-    .delay-500 { animation-delay: 500ms; }
 
-    /* ============================================================
-       11. Responsive & motion preferences
-       ============================================================ */
-    @media (min-width: 640px) {
-      body {
-        padding: 2rem;
-      }
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-delay: 0ms !important;
-        transition-duration: 0.01ms !important;
-      }
 
-      .animate-fade-in-up,
-      .animate-pop-in {
-        opacity: 1;
-      }
-    }
-  </style>
+
+
+        /* تنسيق للشاشات الصغيرة */
+        @media (max-width: 720px) {
+            .details-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .stats-action-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px;
+            }
+            .stats-container {
+                justify-content: space-between;
+            }
+            .contact-btn {
+                width: 100%;
+            }
+
+
+            .button{
+                width: 100%;
+            }
+
+            .tools-section {
+                transform: translateX(210%);
+            }
+        
+
+        }
+
+
+         @media (max-width: 600px){
+             .button{
+                margin: 15px;
+                width: 80%;
+                flex-direction: column;
+                align-items: center;
+            }
+        .glass-placeholder {
+               margin: 10px;
+         }
+         .profile-card {
+            max-height: 95vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            
+        }    
+         .profile-card::-webkit-scrollbar { 
+            display: none;
+         }
+         
+            .tools-section {
+                transform: translateX(90%);
+                width: 30%;
+            }
+            
+         }
+
+
+
+
+
+    </style>
 </head>
-
 <body>
-  <div class="bg-wave-line" aria-hidden="true"></div>
 
-  <main class="glass-panel animate-fade-in-up">
-    <!-- Avatar -->
-    <div class="avatar-container animate-pop-in delay-200">
-      <div class="avatar-inner">
-        <div class="avatar-fallback" aria-hidden="true"></div>
-        <img src="00.jpg" alt="Abderrazzak profile picture">
-      </div>
-    </div>
+    <div class="profile-card">
+        <!-- قسم صورة الغلاف مع التدرج والمتداخل -->
+        <div class="cover-section">
 
-    <!-- Header -->
-    <header class="profile-header animate-fade-in-up delay-300">
-      <h1 class="profile-name">Abderrazzak.dev</h1>
-      <p class="profile-bio">
-        Dedicated Front-End Developer building dynamic, highly responsive digital interfaces
-        with a focus on clean code and modern UI aesthetics.<br>
-        A showcase of some personal front-end projects I've been experimenting with 👇
-      </p>
-    </header>
 
-    <!-- Project links -->
-    <section class="links-grid animate-fade-in-up delay-400">
+
+            <button class="bookmark-btn" aria-label="Bookmark">
+                <i class="ph-fill ph-paper-plane-tilt" aria-hidden="true" style="color: var(--btn-text);"></i>
+            </button>
+        </div>
+
+        <div class="card-content">
+            <!-- الصورة الشخصية -->
+            <div class="avatar-container">
+                <img src="profile.png" alt="Profile Avatar" class="avatar-image">
+            </div>
+
+            <!-- المعلومات الأساسية -->
+            <div class="profile-info">
+                <h2 class="profile-name">Abd El Rrazzak</h2>
+                <p class="profile-subtitle">_ Front-End Developer & Web Designer</p>
+            </div>
+
+            <!-- التفاصيل والأدوات -->
+            <div class="details-row">
+                <div class="meta-info">
+                    <div class="meta-item">
+                        <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                        Digital Products Designer
+                    </div>
+                    <div class="meta-item">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                        Available Remotely
+                    </div>
+                </div>
+
+                <!-- أيقونات الأدوات -->
+
+            </div>
+            <div class="button">
+
+            <a href="Written_In_The_Stars/star.html" class="glass-placeholder">
+        <i class="ph ph-sparkle" aria-hidden="true"></i>
+        <span>In The Stars</span>
+      </a>
+
+            <a href="Samsung_Store/store.html" class="glass-placeholder">
+        <i class="ph ph-storefront" aria-hidden="true"></i>
+        <span>Samsung Store</span>
+      </a>
+
       <a href="Sign_In/signin.html" class="glass-placeholder">
         <i class="ph ph-sign-in" aria-hidden="true"></i>
-        <span>LoginPage</span>
+        <span>Login Page</span>
       </a>
 
-      <a href="Written_In_The_Stars/star.html" class="glass-placeholder">
-        <i class="ph ph-sparkle" aria-hidden="true"></i>
-        <span>InTheStars</span>
-      </a>
-    </section>
+            </div>
 
-    <section class="links-grid animate-fade-in-up delay-500">
-      <a href="Samsung_Store/store.html" class="glass-placeholder">
-        <i class="ph ph-storefront" aria-hidden="true"></i>
-        <span>SamsungStore</span>
-      </a>
+       
+                            <div class="tools-section">
+              <a href="https://www.instagram.com/ab__________do6/?__pwa=1#" class="social-btn google"><i class="fa-brands fa-instagram icons"></i></a>
+            <a href="https://github.com/abd-elrazzak-dev/-frontend-projects-gallery" class="social-btn github"><i class="fa-brands fa-github icons"></i></a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abderrazzak.dev@gmail.com" class="social-btn linkedin"><i class="fa-solid fa-envelope icons"></i></a>
+                </div>
 
-      <a href="#" class="glass-placeholder">
-        <i class="ph ph-hourglass-medium" aria-hidden="true"></i>
-        <span>Incoming...</span>
-      </a>
-    </section>
 
-    <!-- Contact -->
-    <a href="Contact_Me/contact.html" class="btn-contact animate-fade-in-up delay-500">
-      <i class="ph-fill ph-paper-plane-tilt" aria-hidden="true"></i>
-      Contact me
-    </a>
-  </main>
+
+                        <div class="test">
+
+
+
+
+
+
+
+           
+        </div>
+        
+               
+            </div>
+        </div>
+    
+
 </body>
 </html>
