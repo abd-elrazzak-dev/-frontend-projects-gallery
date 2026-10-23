@@ -1,0 +1,334 @@
+:root {
+    --bg-color: #050d09;
+    --card-bg: rgba(14, 35, 23, 0.4);
+    --card-border: rgba(211, 110, 29, 0.2);
+    --accent-primary: #D36E1D;
+    --accent-gradient: linear-gradient(135deg, #E28941 0%, #a85311 100%);
+    --text-main: #E8F0EA;
+    --text-muted: #8FA697;
+    --input-bg: rgba(5, 13, 9, 0.6);
+    --input-border: rgba(143, 166, 151, 0.15);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('00.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: var(--text-main);
+    overflow: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(5, 13, 9, 0.8), rgba(10, 26, 18, 0.95));
+    z-index: 1;
+}
+
+.top-nav {
+    position: absolute;
+    top: 30px;
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-main);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.icon-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-primary);
+}
+
+.logo-container {
+    margin: 50px 0 30px;
+    text-align: center;
+    z-index: 2;
+}
+
+.logo-container svg {
+    width: 90px;
+    height: 90px;
+    filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.5));
+}
+
+.login-card {
+    width: 90%;
+    max-width: 420px;
+    padding: 40px 30px;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    z-index: 2;
+}
+
+.header-text {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.header-text h1 {
+    margin-bottom: 8px;
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.header-text h1 span {
+    color: var(--accent-primary);
+    font-weight: 600;
+}
+
+.header-text p {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 14px;
+    transition: all 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 4px rgba(211, 110, 29, 0.1);
+}
+
+.input-icon {
+    margin-right: 15px;
+    font-size: 18px;
+    color: var(--text-muted);
+}
+
+.input-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.input-content label {
+    margin-bottom: 2px;
+    font-size: 11px;
+    color: var(--text-main);
+}
+
+.input-content input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+.input-content input::placeholder {
+    color: rgba(143, 166, 151, 0.5);
+}
+
+.eye-btn {
+    padding: 5px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.eye-btn:hover {
+    color: var(--text-main);
+}
+
+.forgot-pass {
+    display: block;
+    margin-bottom: 25px;
+    text-align: right;
+    font-size: 12px;
+    color: var(--accent-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-pass:hover {
+    color: #E28941;
+    text-decoration: underline;
+}
+
+.sign-in-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    background: var(--accent-gradient);
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(211, 110, 29, 0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sign-in-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(211, 110, 29, 0.4);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.divider::before, 
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--input-border);
+}
+
+.divider span {
+    padding: 0 15px;
+}
+
+.social-logins {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    border-radius: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.social-btn i {
+    font-size: 24px;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.social-btn.google:hover i { color: #ea4335; }
+.social-btn.github:hover i { color: #ffffff; text-shadow: 0 0 5px rgba(255, 255, 255, 0.8); } 
+.social-btn.linkedin:hover i { color: #0a66c2; }
+
+.signup-text {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.signup-text a {
+    margin-left: 5px;
+    color: var(--accent-primary);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.signup-text a:hover {
+    color: #E28941;
+    text-decoration: underline;
+}
+
+.bottom-swipe {
+    position: absolute;
+    bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 2;
+}
+
+.swipe-indicator {
+    width: 40px;
+    height: 4px;
+    background: var(--text-main);
+    border-radius: 2px;
+    opacity: 0.8;
+}
+
+.bottom-swipe p {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    color: var(--text-main);
+    opacity: 0.9;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-color); 
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-primary); 
+    border-radius: 4px;
+}
+```eof
