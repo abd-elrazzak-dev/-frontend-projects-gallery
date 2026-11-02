@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Card Component</title>
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-       
+
         :root {
             --primary-text: #ffffff;
             --secondary-text: #9ca3af;
@@ -18,12 +18,23 @@
             --btn-text: #cedcfd;
             --divider-color: rgba(255, 255, 255, 0.15);
             --secondary-bg-color: rgba(255, 255, 255, 0.2);
+            --bg1: #eef2f7;
+            --bg2: #b8d2f0;
+            --bg3: #ebc6f7;
+
+            --border-color: rgba(15, 23, 42, 0.1);
+            --text-main:  #cedcfd;
+            --text-muted:#eef2f7;
+            --accent: #258feb;
+            --accent2: #0ecce9;
+
+            --btn-hover-bg: var(--accent2);
+            --on-accent: #ffffff;
+            --gap: 1rem;
+            --transition-speed: 0.3s;
         }
 
-          
-         body::-webkit-scrollbar { 
-            display: none;
-         }
+        body::-webkit-scrollbar { display: none; }
 
         body {
             font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
@@ -34,7 +45,7 @@
             background-color: var(--bg-color);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
@@ -42,10 +53,22 @@
             background-attachment: fixed;
         }
 
+        /* ================= الحاوية الرئيسية ================= */
+        .main {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--gap);
+            box-sizing: border-box;
+        }
+
         .profile-card {
             width: 100%;
             max-width: 900px;
-            height: 60vh;
+            height: auto;
             border-radius: 28px;
             background: var(--card-bg);
             backdrop-filter: blur(7px);
@@ -53,80 +76,111 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             overflow: hidden;
-            position: relative;
-            
-    transform-origin: center center;
-    animation: expandCard 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            
-        }      
+            margin: 50px 0 60px 0;
+            transform-origin: center center;
+            animation: expandCard 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
         .cover-section {
             height: 100px;
             position: relative;
             opacity: 0;
-    animation: fadeInContent 0.5s ease-out 1.1s forwards;
+            animation: fadeInContent 0.5s ease-out 1.1s forwards;
             background-size: cover;
             background-position: center;
-
-            
         }
 
-
-                .test {
-            height: 30px;
-            position: relative;
-            
-            background-size: cover;
-            background-position: center;
-
-            
-        }
-
+        .test { height: 40px; width: 40px; }
 
         .tools-section {
             position: absolute;
-            
             justify-content: space-around;
             width: 20%;
             background-color: var(--secondary-bg-color);
             border: 1px solid var(--secondary-text);
             border-radius: 50px;
             padding: 0 28px;
-            margin-top: 60px;
             z-index: 6;
             display: flex;
             align-items: center;
             gap: 10px;
             color: var(--primary-text);
             font-size: 15px;
-            
+            right: 20px;
+            bottom: 0px;
+            left: auto;
+            top: auto;
+            margin-top: 0;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-      
 
 
-        .icons {
-            color: var(--btn-text);
-            font-size: 20px;
-            margin: 5px;
+        .tools-section:hover{
+            transform: scale(1.07);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.30);
         }
+        
 
 
 
+
+
+
+
+
+
+
+       .tools-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    transform: skewX(-65deg);
+    animation: continuousShine 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        .icons { color: var(--btn-text); font-size: 20px; margin: 5px; }
 
         .cover-section::after {
             content: '';
             position: absolute;
             inset: 0;
-            
             pointer-events: none;
         }
 
         .bookmark-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 44px;
-            height: 44px;
+            top: 10px; right: 10px;
+            width: 44px; height: 44px;
             border-radius: 50%;
             background-color: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
@@ -140,34 +194,23 @@
             z-index: 10;
             transition: all 0.3s ease;
         }
+        .bookmark-btn svg { stroke: #ffffff; }
+        .bookmark-btn:hover { background-color: rgba(255, 255, 255, 0.4); transform: scale(1.05); }
 
-        .bookmark-btn svg {
-            stroke: #ffffff;
-        }
-
-        .bookmark-btn:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-            transform: scale(1.05);
-        }
-
-        .card-content {
+        .profile-card .card-content {
             padding: 0px 30px 30px 30px;
             position: relative;
             z-index: 2;
             opacity: 0;
-    animation: fadeInContent 0.5s ease-out 1.1s forwards;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            animation: fadeInContent 0.5s ease-out 1.1s forwards;
         }
 
-        .avatar-container {
-            margin-top: -75px;
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 3;
-        }
-        
+        .avatar-container { margin-top: -75px; margin-bottom: 16px; position: relative; z-index: 3; }
+
         .avatar-image {
-            width: 120px;
-            height: 120px;
+            width: 120px; height: 120px;
             border-radius: 50%;
             border: 4px solid rgba(255, 255, 255, 0.25);
             object-fit: cover;
@@ -175,24 +218,14 @@
             box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-
-        .profile-info {
-            margin-bottom: 24px;
-        }
-
+        .profile-info { margin-bottom: 24px; }
         .profile-name {
-            font-size: 26px;
-            font-weight: 700;
+            font-size: 26px; font-weight: 700;
             color: var(--primary-text);
             margin: 0 0 6px 0;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
-
-        .profile-subtitle {
-            font-size: 16px;
-            color: var(--secondary-text);
-            margin: 0 0 12px 0;
-        }
+        .profile-subtitle { font-size: 16px; color: var(--secondary-text); margin: 0 0 12px 0; }
 
         .details-row {
             display: flex;
@@ -209,31 +242,13 @@
             color: var(--secondary-text);
             font-size: 14px;
             font-weight: 500;
+            flex-wrap: wrap;
         }
 
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .meta-item { display: flex; align-items: center; gap: 6px; }
+        .meta-item svg { width: 16px; height: 16px; fill: currentColor; }
 
-        .meta-item svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-
-        .tools-section {
-            
-           
-        }
-
-        .tool-icon {
-            width: 22px;
-            height: 22px;
-            border-radius: 4px;
-            object-fit: contain;
-        }
+        .tool-icon { width: 22px; height: 22px; border-radius: 4px; object-fit: contain; }
 
         .stats-action-row {
             display: flex;
@@ -244,17 +259,8 @@
             border-top: 1px solid var(--divider-color);
         }
 
-        .stats-container {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
+        .stats-container { display: flex; align-items: center; gap: 24px; }
+        .stat-item { display: flex; flex-direction: column; gap: 4px; }
 
         .stat-value {
             font-size: 16px;
@@ -264,23 +270,9 @@
             align-items: center;
             gap: 6px;
         }
-
-        .stat-value svg {
-            width: 16px;
-            height: 16px;
-            fill: var(--primary-text);
-        }
-
-        .stat-label {
-            font-size: 13px;
-            color: var(--secondary-text);
-        }
-
-        .divider {
-            width: 1px;
-            height: 30px;
-            background-color: var(--divider-color);
-        }
+        .stat-value svg { width: 16px; height: 16px; fill: var(--primary-text); }
+        .stat-label { font-size: 13px; color: var(--secondary-text); }
+        .divider { width: 1px; height: 30px; background-color: var(--divider-color); }
 
         .contact-btn {
             background-color: var(--btn-bg);
@@ -294,8 +286,6 @@
             transition: all 0.2s ease;
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.15);
         }
-
-
 
         .glass-placeholder {
             background-color: var(--btn-bg);
@@ -311,9 +301,7 @@
             text-decoration: none;
         }
 
-
-
-        .button{
+        .button {
             margin: 70px 30px 50px 30px;
             width: 80%;
             display: flex;
@@ -321,173 +309,358 @@
             align-items: start;
         }
 
-        .contact-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+        .contact-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .titel1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            height: 50px;
+            background: var(--card-bg);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            margin-bottom: 30px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .titel1 h2 { color: var(--btn-text); margin: 0px 70px 0 70px; }
+
+        /* ================= شبكة بطاقات المشاريع ================= */
+        .projects-grid {
+            display: grid;
+            /* ✅ 4 أعمدة افتراضياً (الشاشات الكبيرة) */
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1rem;
+            width: 100%;
+            margin-bottom: 80px;
+            box-sizing: border-box;
         }
 
+        /* ✅ بطاقة أصغر */
+        .card {
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            width: 100%;
+            min-width: 0;
+            box-sizing: border-box;
+        }
 
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -5px rgba(0, 0, 0, 0.18);
+            border-color: var(--accent);
+        }
 
+        .card-image {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background-color: var(--bg1);
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .card-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .card:hover .card-image img { transform: scale(1.05); }
 
+        .project-content {
+            padding: 0.65rem 0.7rem 0.35rem 0.7rem;
+            flex-grow: 1;
+        }
 
-@keyframes expandCard {
+        .card-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.15rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 0.4rem;
+            padding: 0.35rem 0.7rem 0.7rem 0.7rem;
+            margin-top: auto;
+        }
+
+        /* ✅ أزرار أصغر */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--btn-bg);
+            color: var(--on-accent);
+            text-decoration: none;
+            border-radius: 7px;
+            height: 32px;
+            width: 32px;
+            overflow: hidden;
+            transition: width var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1),
+                        background-color var(--transition-speed) ease,
+                        padding var(--transition-speed) ease;
+            white-space: nowrap;
+            padding: 0;
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover-bg);
+            width: 92px;
+            justify-content: flex-start;
+            padding-left: 10px;
+        }
+
+        .btn svg { width: 16px; height: 16px; flex-shrink: 0; fill: currentColor; }
+
+        .btn span {
+            font-size: 0.75rem;
+            font-weight: 700;
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            transition: opacity var(--transition-speed) ease,
+                        width var(--transition-speed) ease,
+                        margin-left var(--transition-speed) ease;
+        }
+
+        .btn:hover span { opacity: 1; width: auto; margin-left: 6px; }
+
+        /* ================= الأنيميشن ================= */
+        @keyframes expandCard {
+            0%   { opacity: 0; transform: scale(0, 0.005); }
+            35%  { opacity: 1; transform: scale(1, 0.005); }
+            100% { opacity: 1; transform: scale(1, 1); }
+        }
+        @keyframes fadeInContent {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes continuousShine {
     0% {
-        opacity: 0;
-        transform: scale(0, 0.005);
+        left: -150%;
     }
-    35% {
-        opacity: 1;
-        transform: scale(1, 0.005); 
+    40% {
+        left: 150%;
     }
     100% {
-        opacity: 1;
-        transform: scale(1, 1);
+        left: 150%;
     }
 }
 
+        /* ================= الاستجابة ================= */
 
-@keyframes fadeInContent {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        /* ✅ الشاشات المتوسطة: 3 أعمدة */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.9rem;
+            }
+        }
 
-
-
-
-
-
-
-
-
+        /* ✅ الأجهزة اللوحية والصغيرة: عمودان */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.8rem;
+                padding: 0 6px;
+            }
+            .card-title { font-size: 0.8rem; }
+        }
 
         @media (max-width: 720px) {
-            .details-row {
-                flex-direction: column;
-                align-items: flex-start;
+            .details-row { flex-direction: column; align-items: flex-start; }
+            .stats-action-row { flex-direction: column; align-items: stretch; gap: 20px; }
+            .stats-container { justify-content: space-between; }
+            .contact-btn { width: 100%; }
+            .button { width: 100%; }
+        }
+
+        /* ✅ الهاتف: عمودان مع بطاقات أصغر */
+        @media (max-width: 620px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.7rem;
+                padding: 0 4px;
             }
-            .stats-action-row {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 20px;
+            .button { margin: 15px; width: 80%; flex-direction: column; align-items: center; }
+            .glass-placeholder { margin: 10px; }
+            .profile-card {
+                max-height: 90vh;
+                overflow-y: auto;
+                scroll-behavior: smooth;
+                margin: 20px 0 40px 0;
             }
-            .stats-container {
-                justify-content: space-between;
+            .profile-card::-webkit-scrollbar { display: none; }
+            .tools-section { width: 30%; }
+            .profile-card .card-content { padding: 0 18px 24px 18px; }
+        }
+
+        /* ✅ الهواتف الصغيرة جداً: عمودان مصغّران */
+        @media (max-width: 480px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 0.55rem;
+                padding: 0 2px;
             }
-            .contact-btn {
-                width: 100%;
-            }
+            .card { border-radius: 10px; }
+            .project-content { padding: 0.5rem 0.55rem 0.25rem 0.55rem; }
+            .card-title { font-size: 0.72rem; }
+            .card-actions { gap: 0.3rem; padding: 0.3rem 0.55rem 0.55rem 0.55rem; }
+            .btn { height: 28px; width: 28px; border-radius: 6px; }
+            .btn svg { width: 14px; height: 14px; }
+            .btn:hover { width: 78px; padding-left: 8px; }
+            .btn span { font-size: 0.68rem; }
+        }
 
-
-            .button{
-                width: 100%;
-            }
-
-            .tools-section {
-                
-            }
-
-           }
-
-        
-
-
-         @media (max-width: 600px){
-             .button{
-                margin: 15px;
-                width: 80%;
-                flex-direction: column;
-                align-items: center;
-            }
-        .glass-placeholder {
-               margin: 10px;
-         }
-         .profile-card {
-            max-height: 90vh;
-            overflow-y: auto;
-            scroll-behavior: smooth;
-            
-        }    
-         .profile-card::-webkit-scrollbar { 
-            display: none;
-         }
-         
-            .tools-section {
-                
-                width: 30%;
-            }
-
-
-          
-           }
-
-         
-
-
-
-
+        @media (max-width: 400px) {
+            .profile-name { font-size: 22px; }
+            .profile-subtitle { font-size: 14px; }
+            .titel1 h2 { margin: 0 20px; }
+        }
 
     </style>
 </head>
 <body>
+    <div class="main">
 
-    <div class="profile-card">
-        <div class="cover-section">
-
-
-
-            <button class="bookmark-btn" aria-label="Bookmark">
-                <i class="ph-fill ph-paper-plane-tilt" aria-hidden="true" style="color: var(--btn-text);"></i>
-            </button>
-        </div>
-
-        <div class="card-content">
-            <div class="avatar-container">
-                <img src="profile.png" alt="Profile Avatar" class="avatar-image">
+        <div class="profile-card">
+            <div class="cover-section">
+                <button class="bookmark-btn" aria-label="Bookmark">
+                    <i class="ph-fill ph-paper-plane-tilt" aria-hidden="true" style="color: var(--btn-text);"></i>
+                </button>
             </div>
 
-            <div class="profile-info">
-                <h2 class="profile-name">Abd El Rrazzak</h2>
-                <p class="profile-subtitle">_ Front-End Developer & Web Designer</p>
-            </div>
+            <div class="card-content">
+                <div class="avatar-container">
+                    <img src="profile.png" alt="Profile Avatar" class="avatar-image">
+                </div>
 
-            <div class="details-row">
-                <div class="meta-info">
-                    <div class="meta-item">
-                        <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
-                        Digital Products Designer
-                    </div>
-                    <div class="meta-item">
-                        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                        Available Remotely
+                <div class="profile-info">
+                    <h2 class="profile-name">Abd El Rrazzak</h2>
+                    <p class="profile-subtitle">_ Front-End Developer & Web Designer</p>
+                </div>
+
+                <div class="details-row">
+                    <div class="meta-info">
+                        <div class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z"/></svg>
+                            Digital Products Designer
+                        </div>
+                        <div class="meta-item">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                            Available Remotely
+                        </div>
                     </div>
                 </div>
 
-
-            </div>
-
-       
                 <div class="tools-section">
-              <a href="https://www.instagram.com/ab__________do6/?__pwa=1#" class="social-btn google"><i class="fa-brands fa-instagram icons"></i></a>
-            <a href="https://github.com/abd-elrazzak-dev/-frontend-projects-gallery" class="social-btn github"><i class="fa-brands fa-github icons"></i></a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abderrazzak.dev@gmail.com" class="social-btn linkedin"><i class="fa-solid fa-envelope icons"></i></a>
+                    <a href="https://www.instagram.com/ab__________do6/?__pwa=1#" class="social-btn google"><i class="fa-brands fa-instagram icons"></i></a>
+                    <a href="https://github.com/abd-elrazzak-dev/-frontend-projects-gallery" class="social-btn github"><i class="fa-brands fa-github icons"></i></a>
+                    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abderrazzak.dev@gmail.com" class="social-btn linkedin"><i class="fa-solid fa-envelope icons"></i></a>
                 </div>
 
-
-
-        <div class="test">
-
-        </div>
-        
-               
+                <div class="test"></div>
             </div>
         </div>
-    
 
+        <div class="titel1">
+            <h2>My Projects</h2>
+        </div>
+
+        <div class="projects-grid">
+
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/seed/portfolio6/400/250" alt="Portfolio Website">
+                </div>
+                <div class="project-content">
+                    <h3 class="card-title">Portfolio Website</h3>
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="btn" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="btn" aria-label="View">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>View</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/seed/portfolio7/400/250" alt="Portfolio Website">
+                </div>
+                <div class="project-content">
+                    <h3 class="card-title">Portfolio Website</h3>
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="btn" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="btn" aria-label="View">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>View</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/seed/portfolio8/400/250" alt="Portfolio Website">
+                </div>
+                <div class="project-content">
+                    <h3 class="card-title">Portfolio Website</h3>
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="btn" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="btn" aria-label="View">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>View</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image">
+                    <img src="https://picsum.photos/seed/portfolio9/400/250" alt="Portfolio Website">
+                </div>
+                <div class="project-content">
+                    <h3 class="card-title">Portfolio Website</h3>
+                </div>
+                <div class="card-actions">
+                    <a href="#" class="btn" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="#" class="btn" aria-label="View">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                        <span>View</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 </body>
 </html>
