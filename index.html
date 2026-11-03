@@ -679,5 +679,124 @@
         </div>
 
     </div>
+
+
+
+
+
+
+   
+
+   
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+    /**
+ * ============================================================
+ *  Simple Visitor Counter
+ * ============================================================
+ *  Purpose:
+ *    - Increment a counter in the Supabase database when the
+ *      page is visited.
+ *    - Display the updated count on the page.
+ *
+ *  Important Security Note:
+ *    - The key used here is the "anon key", NOT the "service_role" key.
+ *    - This key is designed by default to be used on the front-end,
+ *      similar to Firebase config, and is not considered a secret.
+ *    - Real protection comes from Supabase RLS (Row Level Security)
+ *      policies, which only allow executing the increment function
+ *      and do not permit reading or modifying any other data.
+ *    - This script does not collect any personal data and does not
+ *      send any information other than the "+1" request.
+ * ============================================================
+ */
+(function () {
+  'use strict';
+
+ 
+
+  const SUPABASE_URL = 'https://zvfqjeslskwkuvvrxakg.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp2ZnFqZXNsc2t3a3V2dnJ4YWtnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM3MDE2MDMsImV4cCI6MjEwOTI3NzYwM30.Cgv7SZDluCGrSQBupwhlDf0YLq9_7sJL06g8IWvx9HI';
+
+
+  const COUNT_MODE = 'session';
+
+
+  const DISPLAY_ELEMENT_ID = 'visitor-count';
+
+
+
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  const KEY = 'visitor_track_v1';
+
+  function shouldIncrement() {
+    try {
+      if (COUNT_MODE === 'every') return true;
+
+      if (COUNT_MODE === 'session') {
+        if (sessionStorage.getItem(KEY)) return false;
+        sessionStorage.setItem(KEY, '1');
+        return true;
+      }
+
+      if (COUNT_MODE === 'day') {
+        const last = parseInt(localStorage.getItem(KEY) || '0', 10);
+        const dayMs = 24 * 60 * 60 * 1000;
+        if (Date.now() - last < dayMs) return false;
+        localStorage.setItem(KEY, String(Date.now()));
+        return true;
+      }
+    } catch (_) {
+
+      return true;
+    }
+    return true;
+  }
+
+  function render(count) {
+    const el = document.getElementById(DISPLAY_ELEMENT_ID);
+    if (el) el.textContent = Number(count).toLocaleString();
+  }
+
+
+
+  async function trackVisitor() {
+    try {
+      let count;
+
+      if (shouldIncrement()) {
+        const { data, error } = await sb.rpc('increment_visitor_count');
+        if (error) throw error;
+        count = data;
+      } else {
+        const { data, error } = await sb.rpc('get_visitor_count');
+        if (error) throw error;
+        count = data;
+      }
+
+      render(count);
+      console.log('[VisitorTracker] العدد الحالي:', count);
+    } catch (err) {
+      console.error('[VisitorTracker] فشل تتبع الزائر:', err.message || err);
+    }
+  }
+
+
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', trackVisitor);
+  } else {
+    trackVisitor();
+  }
+})();
+</script>
+
+
+
+
+
+
+
 </body>
 </html>
